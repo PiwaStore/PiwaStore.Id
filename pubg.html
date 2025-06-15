@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Top Up PUBG UC</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        
+        .container {
+            max-width: 500px;
+            margin: 0 auto;
+            background-color: white;
+            min-height: 100vh;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        
+        .header {
+            background: linear-gradient(to right, #FF7A00, #FFA800);
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 22px;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+        
+        .header p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+        
+        .content {
+            padding: 20px;
+        }
+        
+        .section {
+            margin-bottom: 25px;
+        }
+        
+        .section-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #333;
+            display: flex;
+            align-items: center;
+        }
+        
+        .section-title .number {
+            background-color: #FF7A00;
+            color: white;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 14px;
+            margin-right: 10px;
+        }
+        
+        .input-group {
+            margin-bottom: 15px;
+        }
+        
+        .input-label {
+            font-size: 14px;
+            color: #555;
+            margin-bottom: 8px;
+            display: block;
+        }
+        
+        .input-field {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 15px;
+        }
+        
+        .note {
+            font-size: 13px;
+            color: #777;
+            margin-top: 5px;
+        }
+        
+        .popular-tag {
+            background-color: #f8f9fa;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 13px;
+            color: #555;
+            display: inline-block;
+            margin-bottom: 15px;
+        }
+        
+        .diamond-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+        
+        .diamond-option {
+            border: 1px solid #e0e0e0;
+            border-radius: 10px;
+            padding: 15px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .diamond-option:hover {
+            border-color: #FF7A00;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .diamond-option.selected {
+            border-color: #FF7A00;
+            background-color: #FFF4E8;
+        }
+        
+        .diamond-amount {
+            font-size: 16px;
+            font-weight: 600;
+            color: #FF7A00;
+            margin-bottom: 5px;
+        }
+        
+        .diamond-bonus {
+            font-size: 13px;
+            color: #666;
+            margin-bottom: 8px;
+        }
+        
+        .diamond-price {
+            font-size: 15px;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .checkout-btn {
+            background: linear-gradient(to right, #FF7A00, #FFA800);
+            color: white;
+            border: none;
+            padding: 15px;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 20px;
+            transition: all 0.3s;
+        }
+        
+        .checkout-btn:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(255, 122, 0, 0.3);
+        }
+        
+        .checkout-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>PUBG MOBILE</h1>
+            <p>Top Up UC - Pembayaran Aman</p>
+        </div>
+        
+        <div class="content">
+            <div class="section">
+                <div class="section-title">
+                    <div class="number">1</div>
+                    <span>Masukkan Player ID</span>
+                </div>
+                
+                <div class="input-group">
+                    <label class="input-label">Masukkan Player ID PUBG</label>
+                    <input type="text" class="input-field" id="player-id" placeholder="Contoh: 1234567890">
+                </div>
+                
+                <p class="note">Untuk mengetahui Player ID Anda, buka profil di game dan lihat di bagian informasi akun.</p>
+            </div>
+            
+            <div class="section">
+                <div class="section-title">
+                    <div class="number">2</div>
+                    <span>Pilih Nominal UC</span>
+                </div>
+                
+                <div class="popular-tag">🔥 Produk terlaris</div>
+                
+                <div class="diamond-grid" id="uc-options">
+                    <!-- UC options will be populated by JavaScript -->
+                </div>
+            </div>
+            
+            <button id="checkout-btn" class="checkout-btn" disabled>Lanjutkan Pembayaran</button>
+        </div>
+    </div>
+
+    <script>
+        // UC data
+        const ucOptions = [
+            { uc: 60, bonus: "", price: 17000 },
+            { uc: 120, bonus: "", price: 31500 },
+            { uc: 180, bonus: "", price: 47000 },
+            { uc: 240, bonus: "", price: 62000 },
+            { uc: 300, bonus: "+25 UC", price: 77000 },
+            { uc: 360, bonus: "+25 UC", price: 92500 },
+            { uc: 420, bonus: "+25 UC", price: 107500 },
+            { uc: 480, bonus: "+25 UC", price: 123000 },
+            { uc: 540, bonus: "+25 UC", price: 138000 },
+            { uc: 600, bonus: "+60 UC", price: 153500 },
+            { uc: 660, bonus: "+60 UC", price: 168500 },
+            { uc: 720, bonus: "+60 UC", price: 184000 },
+            { uc: 780, bonus: "+60 UC", price: 199000 },
+            { uc: 840, bonus: "+60 UC", price: 214000 },
+            { uc: 900, bonus: "+85 UC", price: 230000 },
+            { uc: 1020, bonus: "+85 UC", price: 259000 },
+            { uc: 1200, bonus: "+120 UC", price: 306000 },
+            { uc: 1320, bonus: "+120 UC", price: 336000 },
+            { uc: 1380, bonus: "+120 UC", price: 351000 },
+            { uc: 1500, bonus: "+300 UC", price: 382000 },
+            { uc: 1620, bonus: "+300 UC", price: 412000 },
+            { uc: 1680, bonus: "+300 UC", price: 427000 },
+            { uc: 1800, bonus: "+325 UC", price: 458000 }
+        ];
+        
+        // Selected variables
+        let selectedPlayerId = '';
+        let selectedUcOption = null;
+        
+        // DOM elements
+        const ucOptionsContainer = document.getElementById('uc-options');
+        const playerIdInput = document.getElementById('player-id');
+        const checkoutBtn = document.getElementById('checkout-btn');
+        
+        // Render UC options
+        function renderUcOptions() {
+            ucOptionsContainer.innerHTML = '';
+            
+            ucOptions.forEach(option => {
+                const optionElement = document.createElement('div');
+                optionElement.className = 'diamond-option';
+                optionElement.dataset.uc = option.uc;
+                
+                let bonusText = option.bonus ? `(${option.bonus})` : '';
+                
+                optionElement.innerHTML = `
+                    <div class="diamond-amount">${option.uc} UC ${bonusText}</div>
+                    <div class="diamond-price">Rp ${option.price.toLocaleString('id-ID')}💸</div>
+                `;
+                
+                optionElement.addEventListener('click', () => {
+                    // Remove selected class from all options
+                    document.querySelectorAll('.diamond-option').forEach(el => {
+                        el.classList.remove('selected');
+                    });
+                    
+                    // Add selected class to clicked option
+                    optionElement.classList.add('selected');
+                    selectedUcOption = option;
+                    
+                    // Enable checkout button if all fields are filled
+                    updateCheckoutButtonState();
+                });
+                
+                ucOptionsContainer.appendChild(optionElement);
+            });
+        }
+        
+        // Update checkout button state based on form completion
+        function updateCheckoutButtonState() {
+            selectedPlayerId = playerIdInput.value.trim();
+            
+            if (selectedPlayerId && selectedUcOption) {
+                checkoutBtn.disabled = false;
+            } else {
+                checkoutBtn.disabled = true;
+            }
+        }
+        
+        // Handle checkout
+        function handleCheckout() {
+            if (!selectedPlayerId || !selectedUcOption) return;
+            
+            const bonusText = selectedUcOption.bonus ? ` ${selectedUcOption.bonus}` : '';
+            
+            const message = `Halo, saya ingin top up UC PUBG:
+            
+Player ID: ${selectedPlayerId}
+Paket UC: ${selectedUcOption.uc} UC${bonusText}
+Harga: Rp ${selectedUcOption.price.toLocaleString('id-ID')}
+
+Mohon bantu proses pembayarannya. Terima kasih.`;
+            
+            const encodedMessage = encodeURIComponent(message);
+            const whatsappUrl = `https://wa.me/6288983976419/?text=${encodedMessage}`;
+            
+            window.open(whatsappUrl, '_blank');
+        }
+        
+        // Event listeners
+        playerIdInput.addEventListener('input', updateCheckoutButtonState);
+        checkoutBtn.addEventListener('click', handleCheckout);
+        
+        // Initialize
+        renderUcOptions();
+    </script>
+</body>
+</html>

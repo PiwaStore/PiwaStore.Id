@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Top Up Honor of Kings</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        
+        .container {
+            max-width: 500px;
+            margin: 0 auto;
+            background-color: white;
+            min-height: 100vh;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        
+        .header {
+            background: linear-gradient(to right, #8A2BE2, #9932CC);
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 22px;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+        
+        .header p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+        
+        .content {
+            padding: 20px;
+        }
+        
+        .section {
+            margin-bottom: 25px;
+        }
+        
+        .section-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #333;
+            display: flex;
+            align-items: center;
+        }
+        
+        .section-title .number {
+            background-color: #8A2BE2;
+            color: white;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 14px;
+            margin-right: 10px;
+        }
+        
+        .input-group {
+            margin-bottom: 15px;
+        }
+        
+        .input-label {
+            font-size: 14px;
+            color: #555;
+            margin-bottom: 8px;
+            display: block;
+        }
+        
+        .input-field {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 15px;
+        }
+        
+        .note {
+            font-size: 13px;
+            color: #777;
+            margin-top: 5px;
+        }
+        
+        .popular-tag {
+            background-color: #f8f9fa;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 13px;
+            color: #555;
+            display: inline-block;
+            margin-bottom: 15px;
+        }
+        
+        .tab-container {
+            margin-bottom: 20px;
+        }
+        
+        .tabs {
+            display: flex;
+            border-bottom: 1px solid #eee;
+            margin-bottom: 15px;
+            overflow-x: auto;
+        }
+        
+        .tab {
+            padding: 10px 15px;
+            cursor: pointer;
+            font-weight: 500;
+            color: #777;
+            position: relative;
+            white-space: nowrap;
+        }
+        
+        .tab.active {
+            color: #8A2BE2;
+        }
+        
+        .tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: #8A2BE2;
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .token-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+        
+        .token-option {
+            border: 1px solid #e0e0e0;
+            border-radius: 10px;
+            padding: 15px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .token-option:hover {
+            border-color: #8A2BE2;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .token-option.selected {
+            border-color: #8A2BE2;
+            background-color: #f5f0fa;
+        }
+        
+        .token-amount {
+            font-size: 16px;
+            font-weight: 600;
+            color: #8A2BE2;
+            margin-bottom: 5px;
+        }
+        
+        .token-bonus {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 8px;
+        }
+        
+        .token-price {
+            font-size: 15px;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .checkout-btn {
+            background: linear-gradient(to right, #8A2BE2, #9932CC);
+            color: white;
+            border: none;
+            padding: 15px;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 20px;
+            transition: all 0.3s;
+        }
+        
+        .checkout-btn:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(138, 43, 226, 0.3);
+        }
+        
+        .checkout-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        .emoji {
+            margin-right: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>⚔️ PRICE LIST HOK ⚔️</h1>
+            <p>Top Up Langsung Masuk Cepat & Aman</p>
+        </div>
+        
+        <div class="content">
+            <div class="section">
+                <div class="section-title">
+                    <div class="number">1</div>
+                    <span>Masukkan Player ID</span>
+                </div>
+                
+                <div class="input-group">
+                    <label class="input-label">Masukkan ID Honor of Kings</label>
+                    <input type="text" class="input-field" id="player-id" placeholder="Contoh: 1234567890">
+                </div>
+                
+                <p class="note">ID bisa ditemukan di menu Profil dalam game</p>
+            </div>
+            
+            <div class="section">
+                <div class="section-title">
+                    <div class="number">2</div>
+                    <span>Pilih Produk</span>
+                </div>
+                
+                <div class="popular-tag">🔥 Produk terlaris bulan ini</div>
+                
+                <div class="tab-container">
+                    <div class="tabs">
+                        <div class="tab active" data-tab="tokens">⚔️ Tokens</div>
+                        <div class="tab" data-tab="weekly">📅 Weekly Card</div>
+                    </div>
+                    
+                    <div class="tab-content active" id="tokens-tab">
+                        <div class="token-grid" id="tokens-options">
+                            <!-- Tokens options will be populated by JavaScript -->
+                        </div>
+                    </div>
+                    
+                    <div class="tab-content" id="weekly-tab">
+                        <div class="token-grid" id="weekly-options">
+                            <!-- Weekly Card options will be populated by JavaScript -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <button id="checkout-btn" class="checkout-btn" disabled>Lanjutkan Pembayaran</button>
+        </div>
+    </div>
+
+    <script>
+        // Product data
+        const products = {
+            tokens: [
+                { name: "16 Tokens", price: 2923, bonus: "" },
+                { name: "80 Tokens", price: 12785, bonus: "" },
+                { name: "240 Tokens", price: 40289, bonus: "" },
+                { name: "400 Tokens", price: 66609, bonus: "" },
+                { name: "560 Tokens", price: 90500, bonus: "" },
+                { name: "2400 + 108 Tokens", price: 389364, bonus: "" },
+                { name: "4000 + 180 Tokens", price: 637176, bonus: "" },
+                { name: "8000 + 360 Tokens", price: 1228090, bonus: "" }
+            ],
+            weekly: [
+                { name: "Weekly Card", price: 12785, bonus: "Upgrade Value mingguan" },
+                { name: "Weekly Card Plus", price: 39421, bonus: "Ekstra benefit mingguan" }
+            ]
+        };
+        
+        // Selected variables
+        let selectedPlayerId = '';
+        let selectedProductType = 'tokens';
+        let selectedProduct = null;
+        
+        // DOM elements
+        const tokensOptionsContainer = document.getElementById('tokens-options');
+        const weeklyOptionsContainer = document.getElementById('weekly-options');
+        const playerIdInput = document.getElementById('player-id');
+        const checkoutBtn = document.getElementById('checkout-btn');
+        const tabs = document.querySelectorAll('.tab');
+        const tabContents = document.querySelectorAll('.tab-content');
+        
+        // Render product options
+        function renderProductOptions() {
+            // Clear containers
+            tokensOptionsContainer.innerHTML = '';
+            weeklyOptionsContainer.innerHTML = '';
+            
+            // Render Tokens options
+            products.tokens.forEach(product => {
+                const optionElement = document.createElement('div');
+                optionElement.className = 'token-option';
+                optionElement.dataset.type = 'tokens';
+                optionElement.dataset.id = product.name;
+                
+                optionElement.innerHTML = `
+                    <div class="token-amount">${product.name}</div>
+                    ${product.bonus ? `<div class="token-bonus">${product.bonus}</div>` : ''}
+                    <div class="token-price">Rp ${product.price.toLocaleString('id-ID')}</div>
+                `;
+                
+                optionElement.addEventListener('click', () => selectProduct('tokens', product));
+                
+                tokensOptionsContainer.appendChild(optionElement);
+            });
+            
+            // Render Weekly Card options
+            products.weekly.forEach(product => {
+                const optionElement = document.createElement('div');
+                optionElement.className = 'token-option';
+                optionElement.dataset.type = 'weekly';
+                optionElement.dataset.id = product.name;
+                
+                optionElement.innerHTML = `
+                    <div class="token-amount">${product.name}</div>
+                    <div class="token-bonus">${product.bonus}</div>
+                    <div class="token-price">Rp ${product.price.toLocaleString('id-ID')}</div>
+                `;
+                
+                optionElement.addEventListener('click', () => selectProduct('weekly', product));
+                
+                weeklyOptionsContainer.appendChild(optionElement);
+            });
+        }
+        
+        // Select product
+        function selectProduct(type, product) {
+            // Remove selected class from all options of the same type
+            document.querySelectorAll(`.token-option[data-type="${type}"]`).forEach(el => {
+                el.classList.remove('selected');
+            });
+            
+            // Add selected class to clicked option
+            const selectedElement = document.querySelector(`.token-option[data-type="${type}"][data-id="${product.name}"]`);
+            if (selectedElement) {
+                selectedElement.classList.add('selected');
+            }
+            
+            selectedProductType = type;
+            selectedProduct = product;
+            
+            // Enable checkout button if all fields are filled
+            updateCheckoutButtonState();
+        }
+        
+        // Update checkout button state based on form completion
+        function updateCheckoutButtonState() {
+            selectedPlayerId = playerIdInput.value.trim();
+            
+            if (selectedPlayerId && selectedProduct) {
+                checkoutBtn.disabled = false;
+            } else {
+                checkoutBtn.disabled = true;
+            }
+        }
+        
+        // Handle tab switching
+        function switchTab(tabName) {
+            // Update tabs
+            tabs.forEach(tab => {
+                if (tab.dataset.tab === tabName) {
+                    tab.classList.add('active');
+                } else {
+                    tab.classList.remove('active');
+                }
+            });
+            
+            // Update tab contents
+            tabContents.forEach(content => {
+                if (content.id === `${tabName}-tab`) {
+                    content.classList.add('active');
+                } else {
+                    content.classList.remove('active');
+                }
+            });
+            
+            // Clear selection when switching tabs
+            if (selectedProductType !== tabName) {
+                selectedProduct = null;
+                document.querySelectorAll('.token-option.selected').forEach(el => {
+                    el.classList.remove('selected');
+                });
+                updateCheckoutButtonState();
+            }
+            
+            selectedProductType = tabName;
+        }
+        
+        // Handle checkout
+        function handleCheckout() {
+            if (!selectedPlayerId || !selectedProduct) return;
+            
+            const productType = selectedProductType === 'tokens' ? 'Tokens' : 'Weekly Card';
+            
+            const message = `Halo, saya ingin top up Honor of Kings:
+            
+Player ID: ${selectedPlayerId}
+Produk: ${selectedProduct.name} (${productType})
+${selectedProduct.bonus ? `Bonus: ${selectedProduct.bonus}\n` : ''}Harga: Rp ${selectedProduct.price.toLocaleString('id-ID')}
+
+Mohon bantu proses pembayarannya. Terima kasih.`;
+            
+            const encodedMessage = encodeURIComponent(message);
+            const whatsappUrl = `https://wa.me/6288983976419/?text=${encodedMessage}`;
+            
+            window.open(whatsappUrl, '_blank');
+        }
+        
+        // Event listeners
+        playerIdInput.addEventListener('input', updateCheckoutButtonState);
+        checkoutBtn.addEventListener('click', handleCheckout);
+        
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => switchTab(tab.dataset.tab));
+        });
+        
+        // Initialize
+        renderProductOptions();
+    </script>
+</body>
+</html>

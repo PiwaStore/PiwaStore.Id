@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Piwa Store id</title>
+    <style>
+        /* Reset CSS */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        /* Variabel CSS */
+        :root {
+            --primary-color: #00c8c8;
+            --dark-color: #0a192f;
+            --darker-color: #020c1b;
+            --light-color: #ccd6f6;
+            --lighter-color: #e6f1ff;
+            --transition: all 0.3s ease;
+        }
+
+        body {
+            background-color: var(--dark-color);
+            color: var(--light-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+        }
+
+        /* Popup Iklan */
+        .popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+        }
+
+        .popup-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .popup-content {
+            position: relative;
+            max-width: 90%;
+            max-height: 90vh;
+        }
+
+        .popup-content img {
+            width: 100%;
+            height: auto;
+            max-height: 90vh;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 200, 200, 0.5);
+            border: 2px solid var(--primary-color);
+        }
+
+        .close-popup {
+            position: absolute;
+            top: -15px;
+            right: -15px;
+            background: var(--primary-color);
+            border: none;
+            color: var(--darker-color);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Header */
+        header {
+            background-color: var(--darker-color);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0, 200, 200, 0.1);
+            position: relative;
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        /* Hamburger Menu */
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding: 0.5rem;
+        }
+
+        .hamburger span {
+            display: block;
+            width: 25px;
+            height: 3px;
+            background-color: var(--primary-color);
+            margin: 5px 0;
+            transition: var(--transition);
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 250px;
+            height: 100vh;
+            background-color: var(--darker-color);
+            position: fixed;
+            top: 0;
+            left: -250px;
+            transition: var(--transition);
+            z-index: 99;
+            padding-top: 80px;
+            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .sidebar.active {
+            left: 0;
+        }
+
+        .sidebar-menu {
+            list-style: none;
+        }
+
+        .sidebar-menu li {
+            padding: 1rem 2rem;
+            border-bottom: 1px solid rgba(0, 200, 200, 0.1);
+            transition: var(--transition);
+        }
+
+        .sidebar-menu li:hover {
+            background-color: rgba(0, 200, 200, 0.1);
+        }
+
+        .sidebar-menu li a {
+            color: var(--light-color);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+
+        .sidebar-menu li a i {
+            margin-right: 10px;
+            color: var(--primary-color);
+        }
+
+        /* Main Content */
+        main {
+            flex: 1;
+            padding: 2rem;
+            margin-left: 0;
+            transition: var(--transition);
+        }
+
+        main.active {
+            margin-left: 250px;
+        }
+
+        /* Slider */
+        .slider-container {
+            position: relative;
+            max-width: 100%;
+            margin: 2rem 0;
+            overflow: hidden;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .slider {
+            display: flex;
+            transition: transform 0.5s ease;
+        }
+
+        .slide {
+            min-width: 100%;
+            position: relative;
+        }
+
+        .slide img {
+            width: 100%;
+            display: block;
+            max-height: 400px;
+            object-fit: cover;
+        }
+
+        .slide-content {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+            padding: 2rem;
+            color: white;
+        }
+
+        .slide-content h2 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .slider-nav {
+            position: absolute;
+            top: 50%;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            transform: translateY(-50%);
+            padding: 0 1rem;
+        }
+
+        .slider-nav button {
+            background-color: rgba(0, 200, 200, 0.5);
+            border: none;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: var(--transition);
+        }
+
+        .slider-nav button:hover {
+            background-color: var(--primary-color);
+        }
+
+        .slider-dots {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+        }
+        .bc {
+            background-image: url('canva.jpg');
+  background-size: cover; /* atau contain */
+  background-repeat: no-repeat;
+  background-position: center;
+  width: 100%;
+  height: 100%;
+  border-radius:5px;
+}
+        }
+      }
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.5);
+            margin: 0 5px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .dot.active {
+            background-color: var(--primary-color);
+        }
+a {
+    text-decoration:none;
+}
+        /* Game Grid */
+        .section-title {
+            margin: 2rem 0 1rem;
+            color: var(--primary-color);
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background-color: var(--primary-color);
+        }
+
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .promo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin: 1rem 0;
+        }
+
+        @media (min-width: 768px) {
+            .games-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+            .promo-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        .game-card {
+            background-color: var(--darker-color);
+            border-radius: 10px;
+            overflow: hidden;
+            transition: var(--transition);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            padding: 1.5rem 1rem;
+            border: 1px solid rgba(0, 200, 200, 0.1);
+        }
+
+        .game-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 200, 200, 0.2);
+            border-color: var(--primary-color);
+        }
+
+        .game-card img {
+            width: 80px;
+            height: 80px;
+            border-radius:10px;
+            object-fit: contain;
+            margin-bottom: 1rem;
+            filter: drop-shadow(0 0 5px rgba(0, 200, 200, 0.3));
+        }
+
+        .game-card h3 {
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+            color: var(--lighter-color);
+        }
+
+        .game-card p {
+            font-size: 0.8rem;
+            color: var(--light-color);
+            opacity: 0.8;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--darker-color);
+            padding: 2rem;
+            text-align: center;
+            margin-top: auto;
+            border-top: 1px solid rgba(0, 200, 200, 0.1);
+        }
+
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .footer-logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .footer-links {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-bottom: 1rem;
+        }
+
+        .footer-links a {
+            color: var(--light-color);
+            text-decoration: none;
+            margin: 0 1rem;
+            transition: var(--transition);
+        }
+
+        .footer-links a:hover {
+            color: var(--primary-color);
+        }
+
+        .social-icons {
+            display: flex;
+            margin-bottom: 1rem;
+        }
+
+        .social-icons a {
+            color: var(--light-color);
+            font-size: 1.5rem;
+            margin: 0 0.5rem;
+            transition: var(--transition);
+        }
+
+        .social-icons a:hover {
+            color: var(--primary-color);
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            font-size: 0.8rem;
+            color: var(--light-color);
+            opacity: 0.7;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hamburger {
+                display: block;
+            }
+
+            .hamburger.active span:nth-child(1) {
+                transform: rotate(45deg) translate(5px, 5px);
+            }
+
+            .hamburger.active span:nth-child(2) {
+                opacity: 0;
+            }
+
+            .hamburger.active span:nth-child(3) {
+                transform: rotate(-45deg) translate(7px, -6px);
+            }
+
+            main.active {
+                margin-left: 0;
+            }
+
+            .games-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .promo-grid {
+                grid-template-columns: repeat(1, 1fr);
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <!-- Popup Iklan Gambar Saja -->
+    <div class="popup-overlay" id="popup">
+        <div class="popup-content">
+            <button class="close-popup" id="closePopup">&times;</button>
+            <a href="https://wa.me/6282116359852">
+            <img src="iklan.jpg" alt="Promo Spesial">
+            </a>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <div class="logo">Piwa           Store ID</div>
+        <button class="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+    </header>
+
+    <!-- Sidebar -->
+    <nav class="sidebar">
+        <ul class="sidebar-menu">
+            <li><a href="#"><i class="fas fa-home"></i> Beranda</a></li>
+            <li><a href="https://whatsapp.com/channel/0029Vb5WqcVAzNbwVafPdF42"><i class="fa-solid fa-ticket"></i> voucher</a></li>
+            <li><a href="https://chat.whatsapp.com/EehyyVPh9MfBbhYXVMfUuf"><i class="fas fa-user"></i> group</a></li>
+            <li><a href="https://wa.me/6282116359852"><i class="fas fa-question-circle"></i> Bantuan</a></li>
+            <li><a href="https://wa.me/6288983976419"><i class="fas fa-envelope"></i> Kontak</a></li>
+        </ul>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Slider -->
+        <div class="slider-container">
+            <div class="slider">
+                <div class="slide">
+                    <img src="slid1.jpg" alt="Promo 1">
+                    <div class="slide-content">
+                        <h2>WELCOME</h2>
+                        <p>selamat datang di Piwa Store Id </p>
+                    </div>
+                </div>
+                <div class="slide">
+                    <img src="slid2.png" alt="Promo 2">
+                    <div class="slide-content">
+                        <h2>Game Populer!</h2>
+                        <p>Sekarang tersedia top up untuk game-game terpopuler</p>
+                    </div>
+                </div>
+                <div class="slide">
+                    <img src="iklan.jpg" alt="Promo 3">
+                    <div class="slide-content">
+                        <h2>Pembayaran Mudah</h2>
+                        <p>Sekarang tersedia lebih banyak metode pembayaran</p>
+                    </div>
+                </div>
+            </div>
+            <div class="slider-nav">
+                <button class="prev"><i class="fas fa-chevron-left"></i></button>
+                <button class="next"><i class="fas fa-chevron-right"></i></button>
+            </div>
+            <div class="slider-dots">
+                <span class="dot active"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+            </div>
+        </div>
+
+        <!-- Game Grid - 8 Items -->
+        <h2 class="section-title">Pilih Game</h2>
+        <div class="games-grid">
+            <div class="game-card">
+                <a href="ml.html">
+                <img src="ml.jpg" alt="Mobile Legends">
+                <h3>Mobile Legends</h3>
+                </a>
+            </div>
+            <div class="game-card">
+                <a href="ff.html">
+                <img src="ff.jpeg" alt="Free Fire">
+                <h3>Free Fire</h3>
+                </a>
+            </div>
+            <div class="game-card">
+                <a href="fc.html">
+                <img src="fc.jpeg" alt=""> 
+                <h3>Fc mobile</h3>
+                </a>
+            </div>
+            <div class="game-card">
+                <a href="gensin.html">
+                <img src="gensin.jpeg" alt="Genshin Impact">
+                <h3>Genshin Impact</h3>
+                </a>
+            </div>
+            <div class="game-card">
+                <a href="pubg.html">
+                <img src="pubg.jpeg" alt="PUBG Mobile">
+                <h3>PUBG Mobile</h3>
+               </a>
+            </div>
+            <div class="game-card">
+                <a href="codm.html">
+                <img src="cod.jpeg" alt="COD Mobile"> 
+                <h3>COD Mobile</h3>
+                </a>
+            </div>
+            <div class="game-card">
+                <a href="hok.html">
+                <img src="hok.jpg" alt="">
+                <h3>League of Legends</h3>
+                </a>
+            </div>
+            <div class="game-card">
+                <a href="aov.html">
+                <img src="aov.jpg" alt="DOTA 2">
+                <h3>Garena AOV</h3>
+                </a>
+            </div>
+        </div>                
+                
+        <!-- Promo Grid - 3 Items -->
+        <h2 class="section-title">Promo Hari Ini</h2>
+        <div class="promo-grid">
+            <div class="game-card">
+                <a href="https://wa.me/6288983976419?text=HALO%20saya%20mau%20beli%20canva%20premium">
+                <div class="bc">
+                <br><br><br>
+                <h3 style=color:black; text-size:200;>Canva premium <br><br><br><br></h3> 
+                </a>
+                 </div>
+            </div>
+            <div class="game-card"
+                
+                <h3>segera datang</h3>
+                <p></p>
+            </div>
+            <div class="game-card">
+                
+                <h3>segera datang</h3>
+                <p></p>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">PiwaStor ID</div>
+            <div class="footer-links">
+                <a href="#">Tentang Kami</a>
+                <a href="#">Kebijakan Privasi</a>
+                <a href="#">Syarat & Ketentuan</a>
+                <a href="#">FAQ</a>
+                <a href="#">Kontak</a>
+            </div>
+            <div class="social-icons">
+                <a href="https://www.facebook.com/pii.v.yourgirl"><i class="fab fa-facebook"></i></a>
+                <a href="https://t.me/PiiYourgirl"><i class="fab fa-telegram"></i></a>
+                <a href="https://wa.me+6288983976419"><i class="fab fa-whatsapp"></i></a>
+                <br> <br> <br> <br>
+            <div class="copyright">
+                &copy; 2025 PiwaStor ID. powe by ripki.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Hamburger Menu
+        const hamburger = document.querySelector('.hamburger');
+        const sidebar = document.querySelector('.sidebar');
+        const main = document.querySelector('main');
+
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            sidebar.classList.toggle('active');
+            main.classList.toggle('active');
+        });
+
+        // Slider
+        const slider = document.querySelector('.slider');
+        const slides = document.querySelectorAll('.slide');
+        const prevBtn = document.querySelector('.prev');
+        const nextBtn = document.querySelector('.next');
+        const dots = document.querySelectorAll('.dot');
+
+        let currentIndex = 0;
+        const slideCount = slides.length;
+
+        function updateSlider() {
+            slider.style.transform = `translateX(-${currentIndex * 100}%)`;
+            
+            // Update dots
+            dots.forEach((dot, index) => {
+                dot.classList.toggle('active', index === currentIndex);
+            });
+        }
+
+        function nextSlide() {
+            currentIndex = (currentIndex + 1) % slideCount;
+            updateSlider();
+        }
+
+        function prevSlide() {
+            currentIndex = (currentIndex - 1 + slideCount) % slideCount;
+            updateSlider();
+        }
+
+        nextBtn.addEventListener('click', nextSlide);
+        prevBtn.addEventListener('click', prevSlide);
+
+        // Auto slide
+        let slideInterval = setInterval(nextSlide, 5000);
+
+        // Pause on hover
+        slider.addEventListener('mouseenter', () => {
+            clearInterval(slideInterval);
+        });
+
+        slider.addEventListener('mouseleave', () => {
+            slideInterval = setInterval(nextSlide, 5000);
+        });
+
+        // Dot navigation
+        dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                currentIndex = index;
+                updateSlider();
+            });
+        });
+
+        // Popup Iklan
+        const popup = document.getElementById('popup');
+        const closePopup = document.getElementById('closePopup');
+
+        // Tampilkan popup setelah 1 detik
+        setTimeout(() => {
+            popup.classList.add('active');
+        }, 1000);
+
+        // Tutup popup
+        closePopup.addEventListener('click', () => {
+            popup.classList.remove('active');
+        });
+
+        // Tutup popup saat klik di luar konten
+        popup.addEventListener('click', (e) => {
+            if (e.target === popup) {
+                popup.classList.remove('active');
+            }
+        });
+    </script>
+</body>
+</html>

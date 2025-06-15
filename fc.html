@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Top Up FC Mobile</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        
+        .container {
+            max-width: 500px;
+            margin: 0 auto;
+            background-color: white;
+            min-height: 100vh;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        
+        .header {
+            background: linear-gradient(to right, #005baa, #003d7a);
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 22px;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+        
+        .header p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+        
+        .content {
+            padding: 20px;
+        }
+        
+        .section {
+            margin-bottom: 25px;
+        }
+        
+        .section-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #333;
+            display: flex;
+            align-items: center;
+        }
+        
+        .section-title .number {
+            background-color: #005baa;
+            color: white;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 14px;
+            margin-right: 10px;
+        }
+        
+        .input-group {
+            margin-bottom: 15px;
+        }
+        
+        .input-label {
+            font-size: 14px;
+            color: #555;
+            margin-bottom: 8px;
+            display: block;
+        }
+        
+        .input-field {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 15px;
+        }
+        
+        .note {
+            font-size: 13px;
+            color: #777;
+            margin-top: 5px;
+        }
+        
+        .popular-tag {
+            background-color: #f8f9fa;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 13px;
+            color: #555;
+            display: inline-block;
+            margin-bottom: 15px;
+        }
+        
+        .tab-container {
+            margin-bottom: 20px;
+        }
+        
+        .tabs {
+            display: flex;
+            border-bottom: 1px solid #eee;
+            margin-bottom: 15px;
+            overflow-x: auto;
+        }
+        
+        .tab {
+            padding: 10px 15px;
+            cursor: pointer;
+            font-weight: 500;
+            color: #777;
+            position: relative;
+            white-space: nowrap;
+        }
+        
+        .tab.active {
+            color: #005baa;
+        }
+        
+        .tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: #005baa;
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .currency-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+        
+        .currency-option {
+            border: 1px solid #e0e0e0;
+            border-radius: 10px;
+            padding: 15px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .currency-option:hover {
+            border-color: #005baa;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .currency-option.selected {
+            border-color: #005baa;
+            background-color: #ebf4ff;
+        }
+        
+        .currency-amount {
+            font-size: 16px;
+            font-weight: 600;
+            color: #005baa;
+            margin-bottom: 5px;
+        }
+        
+        .currency-price {
+            font-size: 15px;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .checkout-btn {
+            background: linear-gradient(to right, #005baa, #003d7a);
+            color: white;
+            border: none;
+            padding: 15px;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 20px;
+            transition: all 0.3s;
+        }
+        
+        .checkout-btn:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 91, 170, 0.3);
+        }
+        
+        .checkout-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>⚽ TOP UP FC MOBILE ⚽</h1>
+            <p>Gas pol squad kamu!</p>
+        </div>
+        
+        <div class="content">
+            <div class="section">
+                <div class="section-title">
+                    <div class="number">1</div>
+                    <span>Masukkan Player ID</span>
+                </div>
+                
+                <div class="input-group">
+                    <label class="input-label">Masukkan ID FC Mobile</label>
+                    <input type="text" class="input-field" id="player-id" placeholder="Contoh: 1234567890">
+                </div>
+                
+                <p class="note">ID bisa ditemukan di menu Profil dalam game</p>
+            </div>
+            
+            <div class="section">
+                <div class="section-title">
+                    <div class="number">2</div>
+                    <span>Pilih Mata Uang</span>
+                </div>
+                
+                <div class="popular-tag">⚡ Produk terlaris bulan ini</div>
+                
+                <div class="tab-container">
+                    <div class="tabs">
+                        <div class="tab active" data-tab="points">FC Points</div>
+                        <div class="tab" data-tab="silver">Silver</div>
+                    </div>
+                    
+                    <div class="tab-content active" id="points-tab">
+                        <div class="currency-grid" id="points-options">
+                            <!-- FC Points options will be populated by JavaScript -->
+                        </div>
+                    </div>
+                    
+                    <div class="tab-content" id="silver-tab">
+                        <div class="currency-grid" id="silver-options">
+                            <!-- Silver options will be populated by JavaScript -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <button id="checkout-btn" class="checkout-btn" disabled>Lanjutkan Pembayaran</button>
+        </div>
+    </div>
+
+    <script>
+        // Product data
+        const products = {
+            points: [
+                { amount: "40 FC Points", price: 6933 },
+                { amount: "100 FC Points", price: 16042 },
+                { amount: "520 FC Points", price: 76453 },
+                { amount: "1070 FC Points", price: 153165 },
+                { amount: "2200 FC Points", price: 316177 },
+                { amount: "5750 FC Points", price: 766857 }
+            ],
+            silver: [
+                { amount: "39 Silver", price: 6933 },
+                { amount: "99 Silver", price: 16042 },
+                { amount: "499 Silver", price: 76453 },
+                { amount: "999 Silver", price: 153165 },
+                { amount: "1999 Silver", price: 316177 },
+                { amount: "4999 Silver", price: 766857 },
+                { amount: "9999 Silver", price: 1533972 }
+            ]
+        };
+        
+        // Selected variables
+        let selectedPlayerId = '';
+        let selectedCurrencyType = 'points';
+        let selectedProduct = null;
+        
+        // DOM elements
+        const pointsOptionsContainer = document.getElementById('points-options');
+        const silverOptionsContainer = document.getElementById('silver-options');
+        const playerIdInput = document.getElementById('player-id');
+        const checkoutBtn = document.getElementById('checkout-btn');
+        const tabs = document.querySelectorAll('.tab');
+        const tabContents = document.querySelectorAll('.tab-content');
+        
+        // Render product options
+        function renderProductOptions() {
+            // Clear containers
+            pointsOptionsContainer.innerHTML = '';
+            silverOptionsContainer.innerHTML = '';
+            
+            // Render FC Points options
+            products.points.forEach(product => {
+                const optionElement = document.createElement('div');
+                optionElement.className = 'currency-option';
+                optionElement.dataset.type = 'points';
+                optionElement.dataset.id = product.amount;
+                
+                optionElement.innerHTML = `
+                    <div class="currency-amount">${product.amount}</div>
+                    <div class="currency-price">Rp ${product.price.toLocaleString('id-ID')}</div>
+                `;
+                
+                optionElement.addEventListener('click', () => selectProduct('points', product));
+                
+                pointsOptionsContainer.appendChild(optionElement);
+            });
+            
+            // Render Silver options
+            products.silver.forEach(product => {
+                const optionElement = document.createElement('div');
+                optionElement.className = 'currency-option';
+                optionElement.dataset.type = 'silver';
+                optionElement.dataset.id = product.amount;
+                
+                optionElement.innerHTML = `
+                    <div class="currency-amount">${product.amount}</div>
+                    <div class="currency-price">Rp ${product.price.toLocaleString('id-ID')}</div>
+                `;
+                
+                optionElement.addEventListener('click', () => selectProduct('silver', product));
+                
+                silverOptionsContainer.appendChild(optionElement);
+            });
+        }
+        
+        // Select product
+        function selectProduct(type, product) {
+            // Remove selected class from all options of the same type
+            document.querySelectorAll(`.currency-option[data-type="${type}"]`).forEach(el => {
+                el.classList.remove('selected');
+            });
+            
+            // Add selected class to clicked option
+            const selectedElement = document.querySelector(`.currency-option[data-type="${type}"][data-id="${product.amount}"]`);
+            if (selectedElement) {
+                selectedElement.classList.add('selected');
+            }
+            
+            selectedCurrencyType = type;
+            selectedProduct = product;
+            
+            // Enable checkout button if all fields are filled
+            updateCheckoutButtonState();
+        }
+        
+        // Update checkout button state based on form completion
+        function updateCheckoutButtonState() {
+            selectedPlayerId = playerIdInput.value.trim();
+            
+            if (selectedPlayerId && selectedProduct) {
+                checkoutBtn.disabled = false;
+            } else {
+                checkoutBtn.disabled = true;
+            }
+        }
+        
+        // Handle tab switching
+        function switchTab(tabName) {
+            // Update tabs
+            tabs.forEach(tab => {
+                if (tab.dataset.tab === tabName) {
+                    tab.classList.add('active');
+                } else {
+                    tab.classList.remove('active');
+                }
+            });
+            
+            // Update tab contents
+            tabContents.forEach(content => {
+                if (content.id === `${tabName}-tab`) {
+                    content.classList.add('active');
+                } else {
+                    content.classList.remove('active');
+                }
+            });
+            
+            // Clear selection when switching tabs
+            if (selectedCurrencyType !== tabName) {
+                selectedProduct = null;
+                document.querySelectorAll('.currency-option.selected').forEach(el => {
+                    el.classList.remove('selected');
+                });
+                updateCheckoutButtonState();
+            }
+            
+            selectedCurrencyType = tabName;
+        }
+        
+        // Handle checkout
+        function handleCheckout() {
+            if (!selectedPlayerId || !selectedProduct) return;
+            
+            const currencyName = selectedCurrencyType === 'points' ? 'FC Points' : 'Silver';
+            
+            const message = `Halo, saya ingin top up FC Mobile:
+            
+Player ID: ${selectedPlayerId}
+Paket: ${selectedProduct.amount} (${currencyName})
+Harga: Rp ${selectedProduct.price.toLocaleString('id-ID')}
+
+Mohon bantu proses pembayarannya. Terima kasih.`;
+            
+            const encodedMessage = encodeURIComponent(message);
+            const whatsappUrl = `https://wa.me/6288983976419/?text=${encodedMessage}`;
+            
+            window.open(whatsappUrl, '_blank');
+        }
+        
+        // Event listeners
+        playerIdInput.addEventListener('input', updateCheckoutButtonState);
+        checkoutBtn.addEventListener('click', handleCheckout);
+        
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => switchTab(tab.dataset.tab));
+        });
+        
+        // Initialize
+        renderProductOptions();
+    </script>
+</body>
+</html>

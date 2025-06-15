@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Top Up Genshin Impact</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        
+        .container {
+            max-width: 500px;
+            margin: 0 auto;
+            background-color: white;
+            min-height: 100vh;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        
+        .header {
+            background: linear-gradient(to right, #3a7bd5, #00d2ff);
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 22px;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+        
+        .header p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+        
+        .content {
+            padding: 20px;
+        }
+        
+        .section {
+            margin-bottom: 25px;
+        }
+        
+        .section-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #333;
+            display: flex;
+            align-items: center;
+        }
+        
+        .section-title .number {
+            background-color: #3a7bd5;
+            color: white;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 14px;
+            margin-right: 10px;
+        }
+        
+        .input-group {
+            margin-bottom: 15px;
+        }
+        
+        .input-label {
+            font-size: 14px;
+            color: #555;
+            margin-bottom: 8px;
+            display: block;
+        }
+        
+        .input-field {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 15px;
+        }
+        
+        .note {
+            font-size: 13px;
+            color: #777;
+            margin-top: 5px;
+        }
+        
+        .popular-tag {
+            background-color: #f8f9fa;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 13px;
+            color: #555;
+            display: inline-block;
+            margin-bottom: 15px;
+        }
+        
+        .tab-container {
+            margin-bottom: 20px;
+        }
+        
+        .tabs {
+            display: flex;
+            border-bottom: 1px solid #eee;
+            margin-bottom: 15px;
+            overflow-x: auto;
+        }
+        
+        .tab {
+            padding: 10px 15px;
+            cursor: pointer;
+            font-weight: 500;
+            color: #777;
+            position: relative;
+            white-space: nowrap;
+        }
+        
+        .tab.active {
+            color: #3a7bd5;
+        }
+        
+        .tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: #3a7bd5;
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .item-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+        
+        .item-option {
+            border: 1px solid #e0e0e0;
+            border-radius: 10px;
+            padding: 15px;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: center;
+        }
+        
+        .item-option:hover {
+            border-color: #3a7bd5;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .item-option.selected {
+            border-color: #3a7bd5;
+            background-color: #f0f7ff;
+        }
+        
+        .item-name {
+            font-size: 15px;
+            font-weight: 600;
+            color: #3a7bd5;
+            margin-bottom: 8px;
+        }
+        
+        .item-price {
+            font-size: 14px;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .checkout-btn {
+            background: linear-gradient(to right, #3a7bd5, #00d2ff);
+            color: white;
+            border: none;
+            padding: 15px;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 20px;
+            transition: all 0.3s;
+        }
+        
+        .checkout-btn:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(58, 123, 213, 0.3);
+        }
+        
+        .checkout-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>GENSHIN IMPACT</h1>
+            <p>Top Up Genesis Crystals & Blessing</p>
+        </div>
+        
+        <div class="content">
+            <div class="section">
+                <div class="section-title">
+                    <div class="number">1</div>
+                    <span>Masukkan UID</span>
+                </div>
+                
+                <div class="input-group">
+                    <label class="input-label">Masukkan UID Genshin Impact</label>
+                    <input type="text" class="input-field" id="user-id" placeholder="Contoh: 123456789">
+                </div>
+                
+                <p class="note">UID bisa ditemukan di menu Profil dalam game</p>
+            </div>
+            
+            <div class="section">
+                <div class="section-title">
+                    <div class="number">2</div>
+                    <span>Pilih Produk</span>
+                </div>
+                
+                <div class="popular-tag">Produk terlaris bulan ini</div>
+                
+                <div class="tab-container">
+                    <div class="tabs">
+                        <div class="tab active" data-tab="crystals">Genesis Crystals</div>
+                        <div class="tab" data-tab="blessing">Blessing</div>
+                    </div>
+                    
+                    <div class="tab-content active" id="crystals-tab">
+                        <div class="item-grid" id="crystals-options">
+                            <!-- Genesis Crystals options will be populated by JavaScript -->
+                        </div>
+                    </div>
+                    
+                    <div class="tab-content" id="blessing-tab">
+                        <div class="item-grid" id="blessing-options">
+                            <!-- Blessing options will be populated by JavaScript -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <button id="checkout-btn" class="checkout-btn" disabled>Lanjutkan Pembayaran</button>
+        </div>
+    </div>
+
+    <script>
+        // Product data
+        const products = {
+            crystals: [
+                { name: "60 Genesis Crystals", price: 10921 },
+                { name: "300 + 30 Bonus", price: 60119 },
+                { name: "980 + 110 Bonus", price: 181929 },
+                { name: "1980 + 260 Bonus", price: 392267 },
+                { name: "3280 + 600 Bonus", price: 603628 },
+                { name: "6480 + 1600 Bonus", price: 1207608 },
+                { name: "ALL Package", price: 2457339 }
+            ],
+            blessing: [
+                { name: "1x Blessing", price: 60119 },
+                { name: "2x Blessing", price: 120239 },
+                { name: "3x Blessing", price: 180358 },
+                { name: "4x Blessing", price: 240478 },
+                { name: "5x Blessing", price: 300597 }
+            ]
+        };
+        
+        // Selected variables
+        let selectedUserId = '';
+        let selectedProductType = 'crystals';
+        let selectedProduct = null;
+        
+        // DOM elements
+        const crystalsOptionsContainer = document.getElementById('crystals-options');
+        const blessingOptionsContainer = document.getElementById('blessing-options');
+        const userIdInput = document.getElementById('user-id');
+        const checkoutBtn = document.getElementById('checkout-btn');
+        const tabs = document.querySelectorAll('.tab');
+        const tabContents = document.querySelectorAll('.tab-content');
+        
+        // Render product options
+        function renderProductOptions() {
+            // Clear containers
+            crystalsOptionsContainer.innerHTML = '';
+            blessingOptionsContainer.innerHTML = '';
+            
+            // Render Genesis Crystals options
+            products.crystals.forEach(product => {
+                const optionElement = document.createElement('div');
+                optionElement.className = 'item-option';
+                optionElement.dataset.type = 'crystals';
+                optionElement.dataset.id = product.name;
+                
+                optionElement.innerHTML = `
+                    <div class="item-name">${product.name}</div>
+                    <div class="item-price">Rp ${product.price.toLocaleString('id-ID')}</div>
+                `;
+                
+                optionElement.addEventListener('click', () => selectProduct('crystals', product));
+                
+                crystalsOptionsContainer.appendChild(optionElement);
+            });
+            
+            // Render Blessing options
+            products.blessing.forEach(product => {
+                const optionElement = document.createElement('div');
+                optionElement.className = 'item-option';
+                optionElement.dataset.type = 'blessing';
+                optionElement.dataset.id = product.name;
+                
+                optionElement.innerHTML = `
+                    <div class="item-name">${product.name}</div>
+                    <div class="item-price">Rp ${product.price.toLocaleString('id-ID')}</div>
+                `;
+                
+                optionElement.addEventListener('click', () => selectProduct('blessing', product));
+                
+                blessingOptionsContainer.appendChild(optionElement);
+            });
+        }
+        
+        // Select product
+        function selectProduct(type, product) {
+            // Remove selected class from all options of the same type
+            document.querySelectorAll(`.item-option[data-type="${type}"]`).forEach(el => {
+                el.classList.remove('selected');
+            });
+            
+            // Add selected class to clicked option
+            const selectedElement = document.querySelector(`.item-option[data-type="${type}"][data-id="${product.name}"]`);
+            if (selectedElement) {
+                selectedElement.classList.add('selected');
+            }
+            
+            selectedProductType = type;
+            selectedProduct = product;
+            
+            // Enable checkout button if all fields are filled
+            updateCheckoutButtonState();
+        }
+        
+        // Update checkout button state based on form completion
+        function updateCheckoutButtonState() {
+            selectedUserId = userIdInput.value.trim();
+            
+            if (selectedUserId && selectedProduct) {
+                checkoutBtn.disabled = false;
+            } else {
+                checkoutBtn.disabled = true;
+            }
+        }
+        
+        // Handle tab switching
+        function switchTab(tabName) {
+            // Update tabs
+            tabs.forEach(tab => {
+                if (tab.dataset.tab === tabName) {
+                    tab.classList.add('active');
+                } else {
+                    tab.classList.remove('active');
+                }
+            });
+            
+            // Update tab contents
+            tabContents.forEach(content => {
+                if (content.id === `${tabName}-tab`) {
+                    content.classList.add('active');
+                } else {
+                    content.classList.remove('active');
+                }
+            });
+            
+            // Clear selection when switching tabs
+            if (selectedProductType !== tabName) {
+                selectedProduct = null;
+                document.querySelectorAll('.item-option.selected').forEach(el => {
+                    el.classList.remove('selected');
+                });
+                updateCheckoutButtonState();
+            }
+            
+            selectedProductType = tabName;
+        }
+        
+        // Handle checkout
+        function handleCheckout() {
+            if (!selectedUserId || !selectedProduct) return;
+            
+            const productType = selectedProductType === 'crystals' ? 'Genesis Crystals' : 'Blessing';
+            
+            const message = `Halo, saya ingin top up Genshin Impact:
+            
+UID: ${selectedUserId}
+Produk: ${selectedProduct.name}
+Harga: Rp ${selectedProduct.price.toLocaleString('id-ID')}
+
+Mohon bantu proses pembayarannya. Terima kasih.`;
+            
+            const encodedMessage = encodeURIComponent(message);
+            const whatsappUrl = `https://wa.me/6288983976419/?text=${encodedMessage}`;
+            
+            window.open(whatsappUrl, '_blank');
+        }
+        
+        // Event listeners
+        userIdInput.addEventListener('input', updateCheckoutButtonState);
+        checkoutBtn.addEventListener('click', handleCheckout);
+        
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => switchTab(tab.dataset.tab));
+        });
+        
+        // Initialize
+        renderProductOptions();
+    </script>
+</body>
+</html>
